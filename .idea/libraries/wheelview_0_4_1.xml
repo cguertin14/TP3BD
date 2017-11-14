@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="wheelview-0.4.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/aeeb244b75b4f64eb5e66b0fcdab0a3489733570/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/aeeb244b75b4f64eb5e66b0fcdab0a3489733570/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.lukedeighton/wheelview/0.4.1/9ea82a6586dc1ed2499d1f76c9aa3bc051e9a5f5/wheelview-0.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

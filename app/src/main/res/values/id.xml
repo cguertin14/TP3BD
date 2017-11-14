@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="MenuAdd" />
+    <item type="id" name="MenuDelete" />
+    <item type="id" name="MenuEdit" />
+    <item type="id" name="MenuListe" />
+</resources>
