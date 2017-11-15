@@ -17,10 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.guertz.tp3.R;
 import com.example.guertz.tp3.Tools.ScreenTools.ManualUI;
-
 import org.sqlite.SQLiteConnection;
 import java.io.File;
 import java.sql.Connection;
@@ -29,10 +27,15 @@ import java.sql.SQLException;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private SQLiteDatabase bd;
+    //MY DATABASE
+    //USER HomeActivity.bd --> DANS LES AUTRES FILES
+    public static SQLiteDatabase bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        instantiateDatabase(bd);
+
         ManualUI ui  = new ManualUI(this);
         ui.setDesignSize(375,667);
         ui.removeTopBar();
@@ -45,6 +48,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setButtonModify(ui);
         setButtonListe(ui);
     }
+    private void instantiateDatabase(SQLiteDatabase db){
+        db = openOrCreateDatabase("TP3",Context.MODE_PRIVATE,null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS Restaurants(Id INTEGER PRIMARY KEY AUTOINCREMENT, Nom VARCHAR, Adresse VARCHAR, qualiteBouffe INTEGER, qualiteService INTEGER, prixMoyen REAL, Cote INTEGER );");
+    }
+
     private void setUpTop(ManualUI ui){
 
         View background = new View(this);

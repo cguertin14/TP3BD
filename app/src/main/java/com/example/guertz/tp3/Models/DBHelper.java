@@ -15,6 +15,7 @@ import java.util.List;
 
 public class DBHelper {
 
+
     public void addRestaurants(SQLiteDatabase db,String nom, String adresse, String qualiteBouffe, String qualiteService, Float prixMoyen, int nbEtoiles){
 
         try{
