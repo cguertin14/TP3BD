@@ -1,6 +1,7 @@
 package com.example.guertz.tp3.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -189,16 +190,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.MenuAdd){
-            Log.i("Add: ","Pressed");
+            Intent intent = new Intent(this, AddRestaurant.class);
+            startActivity(intent);
         }
         else if(v.getId() == R.id.MenuDelete){
-            Log.i("Delete: ","Pressed");
+            Intent intent = new Intent(this, DeleteRestaurant.class);
+            startActivity(intent);
         }
         else if(v.getId() == R.id.MenuEdit){
-            Log.i("Edit: ","Pressed");
+            Intent intent = new Intent(this, ChooseRestaurant.class);
+            startActivity(intent);
         }
         else if(v.getId() == R.id.MenuListe){
-            Log.i("Liste: ","Pressed");
-        }
+            Intent intent = new Intent(this, ListeRestaurant.class);
+            startActivity(intent);
+    }
     }
 }

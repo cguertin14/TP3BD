@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.AddRestaurant"></activity>
+        <activity android:name=".Activities.ModifyRestaurant"></activity>
+        <activity android:name=".Activities.ListeRestaurant"></activity>
+        <activity android:name=".Activities.ChooseRestaurant"></activity>
+        <activity android:name=".Activities.DeleteRestaurant"></activity>
     </application>
 
 </manifest>

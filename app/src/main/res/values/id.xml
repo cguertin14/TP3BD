@@ -4,4 +4,11 @@
     <item type="id" name="MenuDelete" />
     <item type="id" name="MenuEdit" />
     <item type="id" name="MenuListe" />
+    <item type="id" name="TB_Adresse" />
+    <item type="id" name="TB_Bouffe" />
+    <item type="id" name="TB_Service" />
+    <item type="id" name="TB_Prix" />
+    <item type="id" name="Nb_Etoile" />
+    <item type="id" name="TB_Nom" />
+    <item type="id" name="BTN_Add" />
 </resources>
