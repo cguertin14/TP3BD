@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.example.guertz.tp3.Models.Items;
 import com.example.guertz.tp3.R;
 import com.example.guertz.tp3.Tools.LogicalCode.Command;
 
@@ -21,10 +22,10 @@ import java.util.List;
 public class DialogHelper {
 
     private int selectedPosition;
-    private String selectedItem;
-    private List<String> data;
+    private Items selectedItem;
+    private List<Items> data;
 
-    public DialogHelper(List<String> data) {
+    public DialogHelper(List<Items> data) {
         setData(data);
         setSelectedItem(data.get(0));
         setSelectedPosition(0);
@@ -40,7 +41,7 @@ public class DialogHelper {
             @Override
             public void onItemSelected(WheelPicker picker, Object data, int position) {
                 selectedPosition = position;
-                selectedItem = picker.getData().get(position).toString();
+                selectedItem = (Items)picker.getData().get(position);
             }
         });
         new AlertDialog.Builder(ctx)
@@ -62,11 +63,11 @@ public class DialogHelper {
 
     //region get-set
 
-    public void setData(List<String> data) {
+    public void setData(List<Items> data) {
         this.data = data;
     }
 
-    public void setSelectedItem(String selectedItem) {
+    public void setSelectedItem(Items selectedItem) {
         this.selectedItem = selectedItem;
     }
 
@@ -78,11 +79,11 @@ public class DialogHelper {
         return selectedPosition;
     }
 
-    public List<String> getData() {
+    public List<Items> getData() {
         return data;
     }
 
-    public String getSelectedItem() {
+    public Items getSelectedItem() {
         return selectedItem;
     }
 

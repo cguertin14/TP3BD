@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guertz.tp3.Models.DBHelper;
+import com.example.guertz.tp3.Models.Items;
 import com.example.guertz.tp3.Models.Restaurant;
 import com.example.guertz.tp3.R;
 import com.example.guertz.tp3.Tools.DialogHelper.DialogHelper;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class DeleteRestaurant extends AppCompatActivity implements View.OnClickListener{
 
+    private Integer currentSelectedId;
     private EditText TB_ChooseResto;
     private List<Restaurant> listAllResto;
 
@@ -117,15 +119,14 @@ public class DeleteRestaurant extends AppCompatActivity implements View.OnClickL
         ui.addFrom(textButton1,containerButtonAdd);
     }
 
-    private List<String> getListRestaurantName(){
-        List<String> listeName = new ArrayList<>();
+    private List<Items> getListRestaurantName(){
+        List<Items> listeItems = new ArrayList<>();
         if(listAllResto != null && listAllResto.size() > 0) {
             for (Restaurant x:listAllResto) {
-                listeName.add(x.getNom());
+                listeItems.add(new Items(x.getNom(),x.getId()));
             }
         }
-
-        return listeName;
+        return listeItems;
     }
 
     private void setUpWheelPicker(){
@@ -133,9 +134,15 @@ public class DeleteRestaurant extends AppCompatActivity implements View.OnClickL
         myDialogHelper.buildWheelPicker(this, "Choisir le restaurant", new Command() {
             @Override
             public void execute() {
-                TB_ChooseResto.setText(myDialogHelper.getSelectedItem());
+                TB_ChooseResto.setText(myDialogHelper.getSelectedItem().toString());
+                currentSelectedId  = myDialogHelper.getSelectedItem().getId();
             }
         });
+    }
+
+    private void resetActivity(){
+        finish();
+        startActivity(getIntent());
     }
 
     @Override
@@ -150,10 +157,12 @@ public class DeleteRestaurant extends AppCompatActivity implements View.OnClickL
             }
         }
 
-        if (v.getId() == R.id.BTN_Delete) {
+        else if (v.getId() == R.id.BTN_Delete) {
 
             if(!TB_ChooseResto.getText().toString().isEmpty()){
-                DBHelper.deleteRestaurant(HomeActivity.bd,1);
+                DBHelper.deleteRestaurant(HomeActivity.bd,currentSelectedId);
+                Toast.makeText(this,"Restaurant supprimer avec succes",Toast.LENGTH_LONG).show();
+                resetActivity();
             }
             else{
                 Toast.makeText(this,"Vous devez choisir un restaurant",Toast.LENGTH_LONG).show();

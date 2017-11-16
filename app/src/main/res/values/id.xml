@@ -20,8 +20,11 @@
     <item type="id" name="TB_NomM" />
 
     <item type="id" name="ChooseRestauDelete" />
+    <item type="id" name="ChooseRestauModify" />
 
     <item type="id" name="BTN_Add" />
 
     <item type="id" name="BTN_Delete" />
+
+    <item type="id" name="BTN_Modify" />
 </resources>

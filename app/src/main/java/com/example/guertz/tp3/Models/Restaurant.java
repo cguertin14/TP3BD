@@ -1,10 +1,12 @@
 package com.example.guertz.tp3.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by Guijet on 2017-11-10.
  */
 
-public class Restaurant {
+public class Restaurant implements Serializable {
 
     private int id,nbEtoiles;
     private String nom,adresse,qualiteBouffe,qualiteService;

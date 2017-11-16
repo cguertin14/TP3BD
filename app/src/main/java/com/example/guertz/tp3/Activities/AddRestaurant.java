@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guertz.tp3.Models.DBHelper;
+import com.example.guertz.tp3.Models.Items;
 import com.example.guertz.tp3.R;
 import com.example.guertz.tp3.Tools.DialogHelper.DialogHelper;
 import com.example.guertz.tp3.Tools.LogicalCode.Command;
@@ -37,7 +38,7 @@ import java.util.List;
 public class AddRestaurant extends AppCompatActivity implements View.OnClickListener{
 
 
-    private List<String> choicesNote = Arrays.asList("Horrible", "Médiocre", "Moyen","Bien","Excellent");
+    private List<Items> choicesNote = Arrays.asList(new Items("Horrible",0), new Items("Médiocre",0), new Items("Moyen",0),new Items("Bien",0),new Items("Excellent",0));
     private EditText TB_Nom,TB_Adresse,TB_Bouffe,TB_Service,TB_Prix;
     private RatingBar rating;
 
@@ -176,14 +177,13 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
         myDialogHelper.buildWheelPicker(this, titre, new Command() {
             @Override
             public void execute() {
-                tb.setText(myDialogHelper.getSelectedItem());
+                tb.setText(myDialogHelper.getSelectedItem().toString());
             }
         });
     }
 
     private void resetActivity(){
         finish();
-        startActivity(getIntent());
     }
 
     @Override

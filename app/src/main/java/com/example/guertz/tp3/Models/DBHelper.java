@@ -38,9 +38,9 @@ public abstract class DBHelper{
         }
     }
 
-    public static void updateRestaurant(SQLiteDatabase db,int idRestaurant, int nbEtoiles, String qualiteBouffe, String qualiteService){
+    public static void updateRestaurant(SQLiteDatabase db,int idRestaurant, int nbEtoiles, String qualiteBouffe, String qualiteService, String nomRestaurant,String adresseRestaurant, Float prixMoyen){
         try{
-            db.execSQL("update Resto set nbEtoiles =" + nbEtoiles +", qualiteBouffe =" + qualiteBouffe + ", qualiteService = " + qualiteService + "where idResaurant =" + idRestaurant + ";" );
+            db.execSQL("update Resto set nbEtoiles =" + nbEtoiles +", qualiteBouffe ='" + qualiteBouffe + "', qualiteService = '" + qualiteService + "',nomRestaurant = '"+ nomRestaurant + "',adresseRestaurant='" + adresseRestaurant + "',prixMoyen="+ prixMoyen + " where idResaurant =" + idRestaurant + ";" );
         }
         catch (Exception e){
             Log.i("Error",e.getMessage());
