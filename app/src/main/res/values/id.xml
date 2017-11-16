@@ -10,5 +10,17 @@
     <item type="id" name="TB_Prix" />
     <item type="id" name="Nb_Etoile" />
     <item type="id" name="TB_Nom" />
+
+    <item type="id" name="TB_AdresseM" />
+    <item type="id" name="TB_BouffeM" />
+    <item type="id" name="TB_ServiceM" />
+    <item type="id" name="TB_PrixM" />
+    <item type="id" name="Nb_EtoileM" />
+    <item type="id" name="TB_NomM" />
+
+    <item type="id" name="ChooseRestauDelete" />
+
     <item type="id" name="BTN_Add" />
+
+    <item type="id" name="BTN_Delete" />
 </resources>

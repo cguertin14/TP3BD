@@ -126,7 +126,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ui.addFrom(imageButton2,containerButtonDelete);
 
         TextView textButton2 = new TextView(this);
-        textButton2.setText("Ajouter un\n restaurant");
+        textButton2.setText("Supprimer un\n restaurant");
         textButton2.setTextColor(Color.parseColor("#3F70C3"));
         textButton2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textButton2.setTextSize(TypedValue.COMPLEX_UNIT_PX,ui.rw(15));
@@ -156,7 +156,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ui.addFrom(imageButton3,containerButtonModify);
 
         TextView textButton3 = new TextView(this);
-        textButton3.setText("Ajouter un\n restaurant");
+        textButton3.setText("Modifier un\n restaurant");
         textButton3.setTextColor(Color.parseColor("#3F70C3"));
         textButton3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textButton3.setTextSize(TypedValue.COMPLEX_UNIT_PX,ui.rw(15));
@@ -183,10 +183,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ImageView imageButton4 = new ImageView(this);
         imageButton4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.listemenu));
         ui.setPosition(imageButton4,ui.rw(46),ui.rh(22),ui.rw(42),ui.rh(42));
-        ui.addFrom(imageButton4,containerButtonListe);
+        ui.addFrom(imageButton4,containerButtonListe);x
 
         TextView textButton4 = new TextView(this);
-        textButton4.setText("Ajouter un\n restaurant");
+        textButton4.setText("Liste des\n restaurants");
         textButton4.setTextColor(Color.parseColor("#3F70C3"));
         textButton4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textButton4.setTextSize(TypedValue.COMPLEX_UNIT_PX,ui.rw(15));

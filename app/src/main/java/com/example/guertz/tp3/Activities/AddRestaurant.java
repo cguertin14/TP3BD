@@ -98,7 +98,6 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
         TB_Service.setHint("Qualité service");
         TB_Service.setId(R.id.TB_Service);
         TB_Service.setFocusable(true);
-
         TB_Service.setHintTextColor(Color.parseColor("#FFFFFF"));
         TB_Service.setTextColor(Color.parseColor("#FFFFFF"));
         TB_Service.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -127,6 +126,7 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
 
 
         RatingBar rating = new RatingBar(this);
+        rating.setId(R.id.Nb_Etoile);
         rating.setNumStars(5);
         rating.setStepSize((float) 1.0);
         LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
