@@ -18,17 +18,30 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.guertz.tp3.Models.DBHelper;
 import com.example.guertz.tp3.R;
+import com.example.guertz.tp3.Tools.DialogHelper.DialogHelper;
+import com.example.guertz.tp3.Tools.LogicalCode.Command;
 import com.example.guertz.tp3.Tools.ScreenTools.ManualUI;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Guijet on 2017-11-14.
  */
 
 public class AddRestaurant extends AppCompatActivity implements View.OnClickListener{
-    @Override
 
+
+    private List<String> choicesNote = Arrays.asList("Horrible", "Médiocre", "Moyen","Bien","Excellent");
+    private EditText TB_Nom,TB_Adresse,TB_Bouffe,TB_Service,TB_Prix;
+    private RatingBar rating;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -64,7 +77,7 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
     }
 
     private void setTextEdits(ManualUI ui){
-        EditText TB_Nom = new EditText(this);
+        TB_Nom = new EditText(this);
         TB_Nom.setHint("Nom Restaurant");
         TB_Nom.setId(R.id.TB_Nom);
         TB_Nom.setHintTextColor(Color.parseColor("#FFFFFF"));
@@ -74,7 +87,7 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
         ui.setPosition(TB_Nom,ui.rw(69),ui.rh(196),ui.rw(237),ui.rh(45));
         ui.addView(TB_Nom);
 
-        EditText TB_Adresse = new EditText(this);
+        TB_Adresse = new EditText(this);
         TB_Adresse.setHint("Adresse");
         TB_Adresse.setId(R.id.TB_Adresse);
         TB_Adresse.setHintTextColor(Color.parseColor("#FFFFFF"));
@@ -84,20 +97,25 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
         ui.setPosition(TB_Adresse,ui.rw(69),ui.rh(255),ui.rw(237),ui.rh(45));
         ui.addView(TB_Adresse);
 
-        EditText TB_Bouffe = new EditText(this);
+        TB_Bouffe = new EditText(this);
+        TB_Bouffe.setOnClickListener(this);
         TB_Bouffe.setHint("Qualité bouffe");
         TB_Bouffe.setId(R.id.TB_Bouffe);
         TB_Bouffe.setHintTextColor(Color.parseColor("#FFFFFF"));
         TB_Bouffe.setTextColor(Color.parseColor("#FFFFFF"));
+        TB_Bouffe.setFocusable(false);
+        TB_Bouffe.setFocusableInTouchMode(false);
         TB_Bouffe.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         TB_Bouffe.getBackground().mutate().setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         ui.setPosition(TB_Bouffe,ui.rw(69),ui.rh(314),ui.rw(237),ui.rh(45));
         ui.addView(TB_Bouffe);
 
-        EditText TB_Service = new EditText(this);
+        TB_Service = new EditText(this);
+        TB_Service.setOnClickListener(this);
         TB_Service.setHint("Qualité service");
         TB_Service.setId(R.id.TB_Service);
-        TB_Service.setFocusable(true);
+        TB_Service.setFocusable(false);
+        TB_Service.setFocusableInTouchMode(false);
         TB_Service.setHintTextColor(Color.parseColor("#FFFFFF"));
         TB_Service.setTextColor(Color.parseColor("#FFFFFF"));
         TB_Service.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -105,19 +123,13 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
         ui.setPosition(TB_Service,ui.rw(69),ui.rh(375),ui.rw(237),ui.rh(45));
         ui.addView(TB_Service);
 
-        EditText TB_Prix = new EditText(this);
+        TB_Prix = new EditText(this);
         TB_Prix.setHint("Prix Moyen");
         TB_Prix.setId(R.id.TB_Prix);
         TB_Prix.setHintTextColor(Color.parseColor("#FFFFFF"));
         TB_Prix.setFocusable(true);
+        TB_Prix.setInputType(InputType.TYPE_CLASS_NUMBER);
         TB_Prix.setFocusableInTouchMode(true);
-        TB_Prix.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.requestFocus();
-                return false;
-            }
-        });
         TB_Prix.setTextColor(Color.parseColor("#FFFFFF"));
         TB_Prix.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         TB_Prix.getBackground().mutate().setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
@@ -125,7 +137,7 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
         ui.addView(TB_Prix);
 
 
-        RatingBar rating = new RatingBar(this);
+        rating = new RatingBar(this);
         rating.setId(R.id.Nb_Etoile);
         rating.setNumStars(5);
         rating.setStepSize((float) 1.0);
@@ -159,10 +171,38 @@ public class AddRestaurant extends AppCompatActivity implements View.OnClickList
         ui.addFrom(textButton1,containerButtonAdd);
     }
 
+    private void setUpWheelPicker(final EditText tb,String titre){
+        final DialogHelper myDialogHelper = new DialogHelper(choicesNote);
+        myDialogHelper.buildWheelPicker(this, titre, new Command() {
+            @Override
+            public void execute() {
+                tb.setText(myDialogHelper.getSelectedItem());
+            }
+        });
+    }
+
+    private void resetActivity(){
+        finish();
+        startActivity(getIntent());
+    }
+
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.BTN_Add){
-
+            if(!TB_Adresse.getText().toString().isEmpty() && !TB_Bouffe.getText().toString().isEmpty() && !TB_Nom.getText().toString().isEmpty() && !TB_Prix.getText().toString().isEmpty() && !TB_Service.getText().toString().isEmpty()){
+                DBHelper.addRestaurants(HomeActivity.bd,TB_Nom.getText().toString(),TB_Adresse.getText().toString(),TB_Bouffe.getText().toString(),TB_Service.getText().toString(),Float.parseFloat(TB_Prix.getText().toString()),(int)rating.getRating());
+                Toast.makeText(this,"Restaurant ajouter avec succès",Toast.LENGTH_LONG).show();
+                resetActivity();
+            }
+            else{
+                Toast.makeText(this,"Vous devez remplir tout les champs",Toast.LENGTH_LONG).show();
+            }
+        }
+        else if(v.getId() == R.id.TB_Bouffe){
+            setUpWheelPicker(TB_Bouffe,"Qualité de la bouffe");
+        }
+        else if(v.getId() == R.id.TB_Service){
+            setUpWheelPicker(TB_Service,"Qualite du service");
         }
     }
 }

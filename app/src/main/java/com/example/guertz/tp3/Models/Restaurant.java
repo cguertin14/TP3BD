@@ -10,7 +10,7 @@ public class Restaurant {
     private String nom,adresse,qualiteBouffe,qualiteService;
     private float prixMoyen;
 
-    public Restaurant(int id,String nom,String adresse,String qualiteBouffe, String qualiteService,Float prixMoyen, int nbEtoiles){
+    public  Restaurant(int id,String nom,String adresse,String qualiteBouffe, String qualiteService,Float prixMoyen, int nbEtoiles){
         this.id = id;
         this.nom = nom;
         this.adresse = adresse;

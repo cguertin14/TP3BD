@@ -8,20 +8,33 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.guertz.tp3.Models.DBHelper;
+import com.example.guertz.tp3.Models.Restaurant;
 import com.example.guertz.tp3.R;
+import com.example.guertz.tp3.Tools.DialogHelper.DialogHelper;
+import com.example.guertz.tp3.Tools.LogicalCode.Command;
 import com.example.guertz.tp3.Tools.ScreenTools.ManualUI;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Guijet on 2017-11-14.
  */
 
 public class DeleteRestaurant extends AppCompatActivity implements View.OnClickListener{
+
+    private EditText TB_ChooseResto;
+    private List<Restaurant> listAllResto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +45,18 @@ public class DeleteRestaurant extends AppCompatActivity implements View.OnClickL
 
         setUpPage(ui);
         setUpButtonAdd(ui);
+
+        fillListeRestaurant();
+    }
+
+    private void fillListeRestaurant(){
+        //GET ALL RESTAURANTS
+        try{
+            listAllResto = DBHelper.getAllRestaurant(HomeActivity.bd);
+        }
+        catch(Exception e){
+            Log.e("Erreur:",e.getMessage().toString());
+        }
     }
 
     private void setUpPage(ManualUI ui){
@@ -53,8 +78,11 @@ public class DeleteRestaurant extends AppCompatActivity implements View.OnClickL
         ui.setPosition(title,ui.rw(53),ui.rh(125),ui.rw(269),ui.rh(40));
         ui.addView(title);
 
-        EditText TB_ChooseResto = new EditText(this);
+        TB_ChooseResto = new EditText(this);
         TB_ChooseResto.setHint("Choisir le restaurant");
+        TB_ChooseResto.setFocusable(false);
+        TB_ChooseResto.setOnClickListener(this);
+        TB_ChooseResto.setFocusableInTouchMode(false);
         TB_ChooseResto.setId(R.id.ChooseRestauDelete);
         TB_ChooseResto.setFocusable(true);
         TB_ChooseResto.setHintTextColor(Color.parseColor("#FFFFFF"));
@@ -89,8 +117,47 @@ public class DeleteRestaurant extends AppCompatActivity implements View.OnClickL
         ui.addFrom(textButton1,containerButtonAdd);
     }
 
+    private List<String> getListRestaurantName(){
+        List<String> listeName = new ArrayList<>();
+        if(listAllResto != null && listAllResto.size() > 0) {
+            for (Restaurant x:listAllResto) {
+                listeName.add(x.getNom());
+            }
+        }
+
+        return listeName;
+    }
+
+    private void setUpWheelPicker(){
+        final DialogHelper myDialogHelper = new DialogHelper(getListRestaurantName());
+        myDialogHelper.buildWheelPicker(this, "Choisir le restaurant", new Command() {
+            @Override
+            public void execute() {
+                TB_ChooseResto.setText(myDialogHelper.getSelectedItem());
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.ChooseRestauDelete){
+            //GET LE ID ET DELETE BY ID APRES
+            if(getListRestaurantName().size() > 0){
+                setUpWheelPicker();
+            }
+            else{
+                Toast.makeText(this,"Aucun restaurant dans la BD",Toast.LENGTH_LONG).show();
+            }
+        }
 
+        if (v.getId() == R.id.BTN_Delete) {
+
+            if(!TB_ChooseResto.getText().toString().isEmpty()){
+                DBHelper.deleteRestaurant(HomeActivity.bd,1);
+            }
+            else{
+                Toast.makeText(this,"Vous devez choisir un restaurant",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

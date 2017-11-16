@@ -1,40 +1,38 @@
 package com.example.guertz.tp3.Activities;
-
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.guertz.tp3.Activities.AddRestaurant;
+import com.example.guertz.tp3.Activities.ChooseRestaurant;
+import com.example.guertz.tp3.Activities.DeleteRestaurant;
+import com.example.guertz.tp3.Activities.ListeRestaurant;
+import com.example.guertz.tp3.Models.DBHelper;
+import com.example.guertz.tp3.Models.Restaurant;
 import com.example.guertz.tp3.R;
 import com.example.guertz.tp3.Tools.ScreenTools.ManualUI;
-import org.sqlite.SQLiteConnection;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
-    //MY DATABASE
-    //USER HomeActivity.bd --> DANS LES AUTRES FILES
     public static SQLiteDatabase bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        instantiateDatabase(bd);
+        instantiateDatabase();
 
         ManualUI ui  = new ManualUI(this);
         ui.setDesignSize(375,667);
@@ -47,10 +45,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setButtonDelete(ui);
         setButtonModify(ui);
         setButtonListe(ui);
+
+        //DBHelper.addRestaurants(bd,"TEST","9","Bon","Moyen",15.0f,2);
+
+
     }
-    private void instantiateDatabase(SQLiteDatabase db){
-        db = openOrCreateDatabase("TP3",Context.MODE_PRIVATE,null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS Restaurants(Id INTEGER PRIMARY KEY AUTOINCREMENT, Nom VARCHAR, Adresse VARCHAR, qualiteBouffe INTEGER, qualiteService INTEGER, prixMoyen REAL, Cote INTEGER );");
+    private void instantiateDatabase() {
+        try {
+            bd = openOrCreateDatabase("TP3", Context.MODE_PRIVATE, null);
+            bd.execSQL("CREATE TABLE IF NOT EXISTS Resto(idResaurant INTEGER PRIMARY KEY AUTOINCREMENT, nomRestaurant VARCHAR, adresseRestaurant VARCHAR, qualiteBouffe varchar, qualiteService varchar, prixMoyen REAL, nbEtoiles INTEGER );");
+        }
+        catch (Exception e){
+            Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setUpTop(ManualUI ui){
@@ -183,7 +190,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ImageView imageButton4 = new ImageView(this);
         imageButton4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.listemenu));
         ui.setPosition(imageButton4,ui.rw(46),ui.rh(22),ui.rw(42),ui.rh(42));
-        ui.addFrom(imageButton4,containerButtonListe);x
+        ui.addFrom(imageButton4,containerButtonListe);
 
         TextView textButton4 = new TextView(this);
         textButton4.setText("Liste des\n restaurants");
