@@ -27,4 +27,18 @@
     <item type="id" name="BTN_Delete" />
 
     <item type="id" name="BTN_Modify" />
+
+    <item type="id" name="TV_Nom" />
+    <item type="id" name="TV_Adresse" />
+    <item type="id" name="TV_Service" />
+    <item type="id" name="TV_Bouffe" />
+    <item type="id" name="TV_Prix" />
+    <item type="id" name="TV_Etoile" />
+    <item type="id" name="BTN_Search" />
+    <item type="id" name="ImportOracle" />
+    <item type="id" name="changeBD" />
+
+    <item type="id" name="BTN_Oracle" />
+    <item type="id" name="BTN_SQLite" />
+
 </resources>

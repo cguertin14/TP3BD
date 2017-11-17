@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+
+
+        </View>
+
+        <TextView
+            android:id="@+id/TV_Nom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginRight="20dp"
+            android:text="TEST"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:gravity="left"/>
+
+
+        <TextView
+            android:id="@+id/TV_Adresse"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Lebrownfree"
+            android:textColor="@color/black"
+            android:textAlignment="gravity"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            />
+
+        <TextView
+            android:id="@+id/TV_Service"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Lebrownfree"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="17dp"
+            android:layout_below="@id/TV_Nom"/>
+
+        <TextView
+            android:id="@+id/TV_Bouffe"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Lebrownfree"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="17dp"
+            android:layout_below="@id/TV_Nom"/>
+
+        <TextView
+            android:id="@+id/TV_Prix"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Lebrownfree"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/TV_Bouffe"
+            android:layout_marginTop="17dp"/>
+
+        <TextView
+            android:id="@+id/TV_Etoile"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Lebrownfree"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/TV_Bouffe"
+            android:layout_marginTop="17dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>
+
+

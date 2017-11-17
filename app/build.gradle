@@ -38,6 +38,6 @@ dependencies {
     compile 'com.baoyz.swipemenulistview:library:1.3.0'
     compile 'com.makeramen:roundedimageview:2.3.0'
     testCompile 'junit:junit:4.12'
-    compile files('libs/ojdbc7.jar')
     compile files('libs/sqlite-jdbc-3.20.0.jar')
+    compile files('libs/ojdbc14.jar')
 }

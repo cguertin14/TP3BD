@@ -1,8 +1,10 @@
 package com.example.guertz.tp3.Activities;
 import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.StrictMode;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,21 +20,30 @@ import com.example.guertz.tp3.Activities.AddRestaurant;
 import com.example.guertz.tp3.Activities.ChooseRestaurant;
 import com.example.guertz.tp3.Activities.DeleteRestaurant;
 import com.example.guertz.tp3.Activities.ListeRestaurant;
+import com.example.guertz.tp3.Models.BDHelperOracle;
 import com.example.guertz.tp3.Models.DBHelper;
 import com.example.guertz.tp3.Models.Restaurant;
 import com.example.guertz.tp3.R;
 import com.example.guertz.tp3.Tools.ScreenTools.ManualUI;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static SQLiteDatabase bd;
+    public static Connection conn_ = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ThreadsSetUps();
         instantiateDatabase();
+
+        OracleConnect();
 
         ManualUI ui  = new ManualUI(this);
         ui.setDesignSize(375,667);
@@ -45,10 +56,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setButtonDelete(ui);
         setButtonModify(ui);
         setButtonListe(ui);
+        SetUpImportButton(ui);
 
-        //DBHelper.addRestaurants(bd,"TEST","9","Bon","Moyen",15.0f,2);
+
+    }
 
 
+    private void ThreadsSetUps(){
+        StrictMode.setThreadPolicy(new
+                        StrictMode.ThreadPolicy.Builder()
+                        .detectDiskReads()
+                        .detectDiskWrites()
+                        .detectNetwork()
+                        .penaltyLog() // Enregistre un message à logcat
+                        .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .penaltyLog()
+                .penaltyDeath() //l'application se bloque, fonctionne à la fin de toutes les sanctions permises
+                .build());
     }
     private void instantiateDatabase() {
         try {
@@ -201,6 +227,53 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ui.addFrom(textButton4,containerButtonListe);
     }
 
+    private void SetUpImportButton(ManualUI ui){
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.RECTANGLE);
+        shape.setColor(Color.parseColor("#FFFFFF"));
+        shape.setCornerRadius(30);
+
+        View buttonImport = new View(this);
+        buttonImport.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        buttonImport.setId(R.id.ImportOracle);
+        buttonImport.setOnClickListener(this);
+        buttonImport.setBackground(shape);
+
+        ui.setPosition(buttonImport,ui.rw(34),ui.rh(604),ui.rw(310),ui.rh(47));
+        ui.addView(buttonImport);
+
+        TextView textButton4 = new TextView(this);
+        textButton4.setText("Importer dans Oracle");
+        textButton4.setTextColor(Color.parseColor("#3F70C3"));
+        textButton4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        textButton4.setTextSize(TypedValue.COMPLEX_UNIT_PX,ui.rw(15));
+        ui.setPosition(textButton4,ui.rw(0),ui.rh(13),ui.rw(310),ui.rh(32));
+        ui.addFrom(textButton4,buttonImport);
+    }
+
+    private void OracleConnect(){
+        Thread t= new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Class.forName("oracle.jdbc.OracleDriver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    String jdbcURL = "jdbc:oracle:thin:@mercure.clg.qc.ca:1521:ORCL";
+                    String user = "jettetre";
+                    String passwd = "oracle1";
+                    conn_ = DriverManager.getConnection(jdbcURL, user, passwd);
+                } catch (java.sql.SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -217,8 +290,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if(v.getId() == R.id.MenuListe){
-            Intent intent = new Intent(this, ListeRestaurant.class);
+            Intent intent = new Intent(this, ChooseDatabase.class);
             startActivity(intent);
-    }
+        }
+        else if(v.getId() == R.id.ImportOracle){
+            if(DBHelper.getAllRestaurant(bd).size() > 0){
+                BDHelperOracle.importDBintoOracle(DBHelper.getAllRestaurant(bd),this);
+                finish();
+                startActivity(getIntent());
+            }
+            else{
+                Toast.makeText(this,"Aucun restaurants dans l'app présentement",Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 }

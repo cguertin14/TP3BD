@@ -12,12 +12,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/Guijet/Desktop/TP3_Android_BD/TP3BD/app/libs/ojdbc7.jar"
+        jar="/Users/Guijet/Desktop/TP3_Android_BD/TP3BD/app/libs/ojdbc14.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.2"
-        sha1="a2348e4944956fac05235f7cd5d30bf872afb157">
-        <dex dex="/Users/Guijet/Desktop/TP3_Android_BD/TP3BD/app/build/intermediates/pre-dexed/debug/ojdbc7_292bf3b31c2ff70be3ab55210621a481bcf3c6c3.jar" />
+        sha1="02d09fd52e5496261dd7f72a17cdd496d0f9b045">
+        <dex dex="/Users/Guijet/Desktop/TP3_Android_BD/TP3BD/app/build/intermediates/pre-dexed/debug/ojdbc14_e1e8a92bbb1c76213ab1a51f080d0e47e7aab9c3.jar" />
     </item>
 
 </items>

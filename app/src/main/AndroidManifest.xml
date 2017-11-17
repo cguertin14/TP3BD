@@ -21,6 +21,8 @@
         <activity android:name=".Activities.ListeRestaurant"></activity>
         <activity android:name=".Activities.ChooseRestaurant"></activity>
         <activity android:name=".Activities.DeleteRestaurant"></activity>
+        <activity android:name=".Activities.ListeOracle"></activity>
+        <activity android:name=".Activities.ChooseDatabase"></activity>
     </application>
 
 </manifest>
