@@ -58,7 +58,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setButtonListe(ui);
         SetUpImportButton(ui);
 
-
     }
 
 

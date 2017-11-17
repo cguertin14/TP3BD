@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.guertz.tp3.Activities.RecyclerView.RestaurantsAdapter;
+import com.example.guertz.tp3.Models.BDHelperOracle;
 import com.example.guertz.tp3.Models.DBHelper;
 import com.example.guertz.tp3.Models.Items;
 import com.example.guertz.tp3.Models.Restaurant;
@@ -46,10 +48,18 @@ public class ListeOracle extends AppCompatActivity implements View.OnClickListen
         fillListRestaurant();
         setUpRecyclerView(ui);
         buildTopHeader(ui);
+
+
     }
 
     private void fillListRestaurant(){
-        listeRestaurant = DBHelper.getAllRestaurant(HomeActivity.bd);
+        try{
+            listeRestaurant = BDHelperOracle.getAllRestaurant();
+        }
+        catch(Exception e){
+            Log.e("Erreur:",e.getMessage().toString());
+        }
+
     }
 
     private void buildTopHeader(ManualUI ui){
@@ -102,19 +112,11 @@ public class ListeOracle extends AppCompatActivity implements View.OnClickListen
 
                 if(myDialogHelper.getSelectedItem().getId() != 0){
                     listeRestaurant.clear();
-                    listeRestaurant.addAll(DBHelper.getRestaurantsByStars(HomeActivity.bd,myDialogHelper.getSelectedItem().getId()));
+                    listeRestaurant.addAll(BDHelperOracle.getAllRestoByStars(myDialogHelper.getSelectedItem().getId()));
                 }
                 else {
                     listeRestaurant.clear();
-                    listeRestaurant.addAll(DBHelper.getAllRestaurant(HomeActivity.bd));
-                }
-                if(myDialogHelper.getSelectedItem().getId() != 0) {
-                    listeRestaurant.clear();
-                    //GET RESTAURANT BY STARS IN ORACLE
-                }
-                else{
-                    listeRestaurant.clear();
-                    //GET ALL RESTAURANT ORACLE
+                    listeRestaurant.addAll(BDHelperOracle.getAllRestaurant());
                 }
                 adapter.notifyDataSetChanged();
                 recyclerView.smoothScrollToPosition(0);

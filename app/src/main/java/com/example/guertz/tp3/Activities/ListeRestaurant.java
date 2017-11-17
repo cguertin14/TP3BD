@@ -112,14 +112,6 @@ public class ListeRestaurant extends AppCompatActivity implements View.OnClickLi
                     listeRestaurant.clear();
                     listeRestaurant.addAll(DBHelper.getAllRestaurant(HomeActivity.bd));
                 }
-                if(myDialogHelper.getSelectedItem().getId() != 0) {
-                    listeRestaurant.clear();
-                    //GET RESTAURANT BY STARS IN ORACLE
-                }
-                else{
-                    listeRestaurant.clear();
-                    //GET ALL RESTAURANT ORACLE
-                }
                 adapter.notifyDataSetChanged();
                 recyclerView.smoothScrollToPosition(0);
             }

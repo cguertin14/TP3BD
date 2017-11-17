@@ -8,6 +8,9 @@ import android.util.Log;
 import com.example.guertz.tp3.Activities.HomeActivity;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,4 +42,45 @@ public abstract class BDHelperOracle {
     private static void killDBLite(Context ctx){
         ctx.deleteDatabase("TP3");
     }
+
+    public static List<Restaurant> getAllRestaurant(){
+        List<Restaurant> listeRestaurants = new ArrayList<>();
+
+        try
+        {
+            String sqltout="select * from viewResto" ;
+            Statement pstm = HomeActivity.conn_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            ResultSet rst = pstm.executeQuery(sqltout);
+            if(rst.first()) {
+                while(rst.next()) {
+                    listeRestaurants.add(new Restaurant(rst.getInt(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getFloat(6),rst.getInt(7)));
+                }
+            }
+        }
+        catch (java.sql.SQLException e) {
+            Log.d("Erreur", e.getMessage());
+        }
+        return listeRestaurants;
+    }
+
+    public static List<Restaurant> getAllRestoByStars(Integer nbStars){
+        List<Restaurant> listeRestaurants = new ArrayList<>();
+        try
+        {
+            String sqltout = "select * from viewResto where nbetoiles = " + nbStars;
+            Statement pstm = HomeActivity.conn_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            ResultSet rst = pstm.executeQuery(sqltout);
+            if(rst.first()) {
+                while(rst.next()) {
+                    listeRestaurants.add(new Restaurant(rst.getInt(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getFloat(6),rst.getInt(7)));
+                }
+            }
+        }
+        catch (java.sql.SQLException e) {
+            Log.d("Erreur", e.getMessage());
+        }
+        return listeRestaurants;
+    }
+
+
 }
