@@ -60,7 +60,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tv_nom.setText(restaurants.get(position).getNom());
         holder.tv_adresse.setText(restaurants.get(position).getAdresse());
-        holder.tv_etoiles.setText(String.valueOf(restaurants.get(position).getNbEtoiles()));
+        holder.tv_etoiles.setText(String.valueOf(restaurants.get(position).getNbEtoiles()) + " Étoiles");
         holder.tv_prix.setText(String.valueOf(restaurants.get(position).getPrixMoyen()));
         holder.tv_qualiteBouffe.setText(restaurants.get(position).getQualiteBouffe());
         holder.tv_qualiteService.setText(restaurants.get(position).getQualiteService());
